@@ -5,7 +5,7 @@
 namespace Talabat.Repository.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class ProductModule : Migration
+    public partial class Tabels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
