@@ -1,7 +1,9 @@
 
 using Microsoft.EntityFrameworkCore;
+using Talabat.Core.Entities;
+using Talabat.Core.Repositories.Contract;
 using Talabat.Repository.Data;
-
+using Talabat.Repository;
 namespace Talabat.APIs
 {
 	public class Program
@@ -47,7 +49,11 @@ namespace Talabat.APIs
 				var logger = loggerFactory.CreateLogger<Program>();
 				logger.LogError(ex, "An Error Has been occured During apply the Migrations");
 			}
+			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<Product>, GenericRepository<Product>>();
+			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductBrand>, GenericRepository<ProductBrand>>();
+			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductCategory>, GenericRepository<ProductCategory>>();\
 
+			WebApplicationbuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 			#endregion
 
 			#region Configure Kestrel Middlewares
