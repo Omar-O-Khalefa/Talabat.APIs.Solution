@@ -26,6 +26,11 @@ namespace Talabat.APIs
 			WebApplicationbuilder.Services.AddDbContext<StoreContext>(options =>
 			options.UseSqlServer(WebApplicationbuilder.Configuration.GetConnectionString("DefaultConnection"))
 			);
+			//WebApplicationbuilder.Services.AddScoped<IGenericRepository<Product>, GenericRepository<Product>>();
+			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductBrand>, GenericRepository<ProductBrand>>();
+			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductCategory>, GenericRepository<ProductCategory>>();\
+
+			WebApplicationbuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 			#endregion
 
 			#region Create DataBase For First Time Deploying
@@ -49,11 +54,7 @@ namespace Talabat.APIs
 				var logger = loggerFactory.CreateLogger<Program>();
 				logger.LogError(ex, "An Error Has been occured During apply the Migrations");
 			}
-			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<Product>, GenericRepository<Product>>();
-			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductBrand>, GenericRepository<ProductBrand>>();
-			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductCategory>, GenericRepository<ProductCategory>>();\
-
-			WebApplicationbuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+			
 			#endregion
 
 			#region Configure Kestrel Middlewares
