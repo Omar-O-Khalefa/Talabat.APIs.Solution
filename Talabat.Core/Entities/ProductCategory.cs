@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Talabat.Core.Entities
 {
-	internal class ProductCategory
+	public class ProductCategory :BaseEntity
 	{
+		public string Name { get; set; } = null!;
 	}
 }

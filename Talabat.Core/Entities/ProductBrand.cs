@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Talabat.Core.Entities
 {
-	internal class ProductBrand
+	public class ProductBrand
 	{
+		public string Name { get; set; } = null!;
+		
+		public ICollection<Product> products { get; set; } = new HashSet<Product>();
 	}
 }
