@@ -9,21 +9,21 @@ namespace Talabat.Core.Entities
 {
 	public class Product :BaseEntity
 	{
-		public string Name { get; set; } = null!;
-		public string Description { get; set; } = null!;
+		public string Name { get; set; }
+		public string Description { get; set; } 
 
-		public string PictureUrl { get; set;} = null!;
+		public string PictureUrl { get; set;} 
 
 		public decimal Price { get; set; }
 
 		//[ForeignKey(nameof(Product.brand))]
 		public int BrandId { get; set; } // Foregin Key Column => ProductBrand
 
-		public ProductBrand brand { get; set; } = null!;
+		public ProductBrand brand { get; set; } 
 
 
 		//[ForeignKey(nameof(Product.Category))]
 		public int CategoryId { get; set; }
-        public ProductCategory Category { get; set; } = null!;
+        public ProductCategory Category { get; set; }
     }
 }
