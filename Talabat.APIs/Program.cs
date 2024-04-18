@@ -33,8 +33,9 @@ namespace Talabat.APIs
 
 			WebApplicationbuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-			WebApplicationbuilder.Services.AddAutoMapper(M => M.AddProfile( new MappingProfiles()));
 			WebApplicationbuilder.Services.AddAutoMapper(typeof(MappingProfiles));
+			
+			//WebApplicationbuilder.Services.AddAutoMapper(M => M.AddProfile( new MappingProfiles()));
 			#endregion
 
 			#region Create DataBase For First Time Deploying
@@ -70,7 +71,7 @@ namespace Talabat.APIs
 			}
 
 			app.UseHttpsRedirection();
-
+			app.UseStaticFiles();
 
 			app.MapControllers(); 
 			#endregion
