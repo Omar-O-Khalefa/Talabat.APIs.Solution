@@ -12,9 +12,19 @@ namespace Talabat.Core.Specifications.ProductSpecs
         // this Constructor Will Be Used For Creating An Object , That Will Be used To get All Products
         public ProductWithBrandAndCategorySpecifications()
             : base()
+		{
+			Includes.Add(p => p.brand);
+			Includes.Add(p => p.Category);
+		}
+		// this Constructor Will Be Used For Creating An Object , That Will Be used To get Product By Id
+		public ProductWithBrandAndCategorySpecifications( int id)
+            : base(p=>p.Id == id)
         {
-            Includes.Add(p => p.brand);
-            Includes.Add(p => p.Category);
-        }
+			Includes.Add(p => p.brand);
+			Includes.Add(p => p.Category);
+		}
+	
+
+
     }
 }
