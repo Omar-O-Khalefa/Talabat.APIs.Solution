@@ -21,9 +21,9 @@ namespace Talabat.Infrastructure
 			{
 				query = query.Where(spec.Criteria);
 				//_dbContext.Set<Product>().Where(p => p.Id == 1)
+			}
 				query = spec.Includes.Aggregate(query, (currentQuery, IncludeExpression) => currentQuery.Include(IncludeExpression));
 				//_dbContext.Set<Product>().Where(p => p.Id == 1).include(p=>p.brand).include(p=>p.Category)
-			}
 			return query;
 		}
 	}
