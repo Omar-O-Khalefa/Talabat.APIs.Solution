@@ -4,6 +4,7 @@ using Talabat.Core.Entities;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Repository.Data;
 using Talabat.Infrastructure;
+using Talabat.APIs.DTOs.Helpers;
 namespace Talabat.APIs
 {
 	public class Program
@@ -31,6 +32,9 @@ namespace Talabat.APIs
 			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductCategory>, GenericRepository<ProductCategory>>();\
 
 			WebApplicationbuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+			WebApplicationbuilder.Services.AddAutoMapper(M => M.AddProfile( new MappingProfiles()));
+			WebApplicationbuilder.Services.AddAutoMapper(typeof(MappingProfiles));
 			#endregion
 
 			#region Create DataBase For First Time Deploying
