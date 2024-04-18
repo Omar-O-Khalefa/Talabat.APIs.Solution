@@ -5,6 +5,9 @@ using Talabat.Core.Repositories.Contract;
 using Talabat.Repository.Data;
 using Talabat.Infrastructure;
 using Talabat.APIs.DTOs.Helpers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Talabat.APIs.Errors;
 namespace Talabat.APIs
 {
 	public class Program
@@ -34,7 +37,23 @@ namespace Talabat.APIs
 			WebApplicationbuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 			WebApplicationbuilder.Services.AddAutoMapper(typeof(MappingProfiles));
-			
+
+			WebApplicationbuilder.Services.Configure<ApiBehaviorOptions>(Options =>
+			{
+				Options.InvalidModelStateResponseFactory = (actionContext) =>
+				{
+					var errors = actionContext.ModelState.Where(p => p.Value.Errors.Count > 0)
+														 .SelectMany(p => p.Value.Errors)
+														 .Select(E => E.ErrorMessage)
+														 .ToList();
+					var respons = new APIValidationErrorResponse()
+					{
+						Errors = errors
+					};
+					return new BadRequestObjectResult(respons);
+				};
+			}
+			);
 			//WebApplicationbuilder.Services.AddAutoMapper(M => M.AddProfile( new MappingProfiles()));
 			#endregion
 
