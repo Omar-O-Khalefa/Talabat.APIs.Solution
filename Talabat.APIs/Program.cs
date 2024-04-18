@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Talabat.Core.Entities;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Repository.Data;
-using Talabat.Repository;
+using Talabat.Infrastructure;
 namespace Talabat.APIs
 {
 	public class Program
