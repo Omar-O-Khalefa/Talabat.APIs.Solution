@@ -31,10 +31,13 @@ namespace Talabat.APIs
 			WebApplicationbuilder.Services.AddDbContext<StoreContext>(options =>
 			options.UseSqlServer(WebApplicationbuilder.Configuration.GetConnectionString("DefaultConnection"))
 			);
+
+			#region IGenericRepositoryServices
 			//WebApplicationbuilder.Services.AddScoped<IGenericRepository<Product>, GenericRepository<Product>>();
 			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductBrand>, GenericRepository<ProductBrand>>();
 			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductCategory>, GenericRepository<ProductCategory>>();\
 
+			#endregion
 			WebApplicationbuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 			WebApplicationbuilder.Services.AddAutoMapper(typeof(MappingProfiles));
@@ -84,12 +87,15 @@ namespace Talabat.APIs
 
 			#region Configure Kestrel Middlewares
 			app.UseMiddleware<ExceptionMiddleware>();
+
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
+
+			app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
