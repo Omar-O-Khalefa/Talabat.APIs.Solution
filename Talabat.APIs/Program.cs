@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Talabat.APIs.Errors;
 using Talabat.APIs.Middlewares;
+using Talabat.APIs.Extensions;
 namespace Talabat.APIs
 {
 	public class Program
@@ -24,41 +25,13 @@ namespace Talabat.APIs
 			WebApplicationbuilder.Services.AddControllers();
 			// Register Required Web APIs Services To the DI Container
 
-			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-			WebApplicationbuilder.Services.AddEndpointsApiExplorer();
-			WebApplicationbuilder.Services.AddSwaggerGen();
+			WebApplicationbuilder.Services.AddSwaggerServices();
 
 			WebApplicationbuilder.Services.AddDbContext<StoreContext>(options =>
-			options.UseSqlServer(WebApplicationbuilder.Configuration.GetConnectionString("DefaultConnection"))
-			);
+			options.UseSqlServer(WebApplicationbuilder.Configuration.GetConnectionString("DefaultConnection")));
+			
+			WebApplicationbuilder.Services.AddApplicationServices();
 
-			#region IGenericRepositoryServices
-			//WebApplicationbuilder.Services.AddScoped<IGenericRepository<Product>, GenericRepository<Product>>();
-			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductBrand>, GenericRepository<ProductBrand>>();
-			//WebApplicationbuilder.Services.AddScoped < IGenericRepository<ProductCategory>, GenericRepository<ProductCategory>>();\
-
-			#endregion
-			WebApplicationbuilder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-			WebApplicationbuilder.Services.AddAutoMapper(typeof(MappingProfiles));
-
-			WebApplicationbuilder.Services.Configure<ApiBehaviorOptions>(Options =>
-			{
-				Options.InvalidModelStateResponseFactory = (actionContext) =>
-				{
-					var errors = actionContext.ModelState.Where(p => p.Value.Errors.Count > 0)
-														 .SelectMany(p => p.Value.Errors)
-														 .Select(E => E.ErrorMessage)
-														 .ToList();
-					var respons = new APIValidationErrorResponse()
-					{
-						Errors = errors
-					};
-					return new BadRequestObjectResult(respons);
-				};
-			}
-			);
-			//WebApplicationbuilder.Services.AddAutoMapper(M => M.AddProfile( new MappingProfiles()));
 			#endregion
 
 			#region Create DataBase For First Time Deploying
@@ -91,13 +64,13 @@ namespace Talabat.APIs
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
-				app.UseSwagger();
-				app.UseSwaggerUI();
+				app.UseSwaggerMiddlewares();
 			}
 
 			app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 			app.UseHttpsRedirection();
+
 			app.UseStaticFiles();
 
 			app.MapControllers(); 
