@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Talabat.APIs.Errors;
 using Talabat.APIs.Middlewares;
 using Talabat.APIs.Extensions;
+using StackExchange.Redis;
 namespace Talabat.APIs
 {
 	public class Program
@@ -29,7 +30,11 @@ namespace Talabat.APIs
 
 			WebApplicationbuilder.Services.AddDbContext<StoreContext>(options =>
 			options.UseSqlServer(WebApplicationbuilder.Configuration.GetConnectionString("DefaultConnection")));
-			
+			WebApplicationbuilder.Services.AddSingleton<IConnectionMultiplexer>((ServiceProvider) =>
+			{
+				var connection = WebApplicationbuilder.Configuration.GetConnectionString("Redis");
+				return ConnectionMultiplexer.Connect(connection);
+			});
 			WebApplicationbuilder.Services.AddApplicationServices();
 
 			#endregion
