@@ -30,6 +30,7 @@ namespace Talabat.APIs
 
 			WebApplicationbuilder.Services.AddDbContext<StoreContext>(options =>
 			options.UseSqlServer(WebApplicationbuilder.Configuration.GetConnectionString("DefaultConnection")));
+
 			WebApplicationbuilder.Services.AddSingleton<IConnectionMultiplexer>((ServiceProvider) =>
 			{
 				var connection = WebApplicationbuilder.Configuration.GetConnectionString("Redis");

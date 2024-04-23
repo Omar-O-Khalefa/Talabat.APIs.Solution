@@ -11,7 +11,7 @@ using Talabat.Core.Repositories.Contract;
 
 namespace Talabat.Infrastructure
 {
-	internal class BasketRepository : IBasketRepository
+	public class BasketRepository : IBasketRepository
 	{
 		private readonly IDatabase _database;
         public BasketRepository(IConnectionMultiplexer redis)
