@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Talabat.APIs.DTOs.Helpers;
 using Talabat.APIs.Errors;
 using Talabat.Core.Repositories.Contract;

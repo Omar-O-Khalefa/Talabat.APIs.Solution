@@ -11,6 +11,7 @@ using Talabat.APIs.Errors;
 using Talabat.APIs.Middlewares;
 using Talabat.APIs.Extensions;
 using StackExchange.Redis;
+using Talabat.Infrastructure.Identity;
 namespace Talabat.APIs
 {
 	public class Program
@@ -30,6 +31,9 @@ namespace Talabat.APIs
 
 			WebApplicationbuilder.Services.AddDbContext<StoreContext>(options =>
 			options.UseSqlServer(WebApplicationbuilder.Configuration.GetConnectionString("DefaultConnection")));
+			
+			WebApplicationbuilder.Services.AddDbContext<AppIdentityDbContext>(options =>
+			options.UseSqlServer(WebApplicationbuilder.Configuration.GetConnectionString("IdentityDbContext")));
 
 			WebApplicationbuilder.Services.AddSingleton<IConnectionMultiplexer>((ServiceProvider) =>
 			{
@@ -55,6 +59,9 @@ namespace Talabat.APIs
 				await _dbContext.Database.MigrateAsync(); // Update-DataBase
 
 				await StoreContextSeed.SeedAsync(_dbContext);
+
+				var IdentityContext = services.GetRequiredService<AppIdentityDbContext>();
+				await IdentityContext.Database.MigrateAsync();
 			}
 			catch (Exception ex)
 			{
