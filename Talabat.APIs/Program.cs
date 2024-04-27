@@ -14,6 +14,11 @@ using StackExchange.Redis;
 using Talabat.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Talabat.Core.Entities.Identity;
+using Talabat.Core.Services;
+using Talabat.Service;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 namespace Talabat.APIs
 {
 	public class Program
@@ -42,8 +47,9 @@ namespace Talabat.APIs
 				var connection = WebApplicationbuilder.Configuration.GetConnectionString("Redis");
 				return ConnectionMultiplexer.Connect(connection);
 			});
-
-			WebApplicationbuilder.Services.AddIdentitySerices();
+			WebApplicationbuilder.Services.AddScoped<ITokenService, TokenService>();
+		
+			WebApplicationbuilder.Services.AddIdentitySerices(WebApplicationbuilder.Configuration);
 			WebApplicationbuilder.Services.AddApplicationServices();
 
 			#endregion
@@ -92,7 +98,11 @@ namespace Talabat.APIs
 
 			app.UseStaticFiles();
 
-			app.MapControllers(); 
+			app.MapControllers();
+
+			app.UseAuthentication();
+
+			app.UseAuthorization();
 			#endregion
 
 			app.Run();

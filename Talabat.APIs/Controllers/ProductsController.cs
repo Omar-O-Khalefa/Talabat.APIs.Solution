@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,7 @@ namespace Talabat.APIs.Controllers
 			_mapper = mapper;
 		}
 		// api/Products
+		[Authorize]
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts()
 		{
