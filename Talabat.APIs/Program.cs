@@ -12,6 +12,8 @@ using Talabat.APIs.Middlewares;
 using Talabat.APIs.Extensions;
 using StackExchange.Redis;
 using Talabat.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
+using Talabat.Core.Entities.Identity;
 namespace Talabat.APIs
 {
 	public class Program
@@ -40,6 +42,8 @@ namespace Talabat.APIs
 				var connection = WebApplicationbuilder.Configuration.GetConnectionString("Redis");
 				return ConnectionMultiplexer.Connect(connection);
 			});
+
+			WebApplicationbuilder.Services.AddIdentitySerices();
 			WebApplicationbuilder.Services.AddApplicationServices();
 
 			#endregion
@@ -62,6 +66,8 @@ namespace Talabat.APIs
 
 				var IdentityContext = services.GetRequiredService<AppIdentityDbContext>();
 				await IdentityContext.Database.MigrateAsync();
+				var userManger = services.GetRequiredService<UserManager<AppUser>>();
+				await AppIdentityDbContextSead.SeadUsersAsync(userManger);
 			}
 			catch (Exception ex)
 			{
