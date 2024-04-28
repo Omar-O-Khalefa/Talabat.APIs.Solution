@@ -9,11 +9,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Entities.Identity;
-using Talabat.Core.Services;
+using Talabat.Core.Services.Contract;
 
 namespace Talabat.Service
 {
-	public class TokenService : ITokenService
+    public class TokenService : ITokenService
 	{
 		private IConfiguration _configuration;
 

@@ -17,7 +17,7 @@ namespace Talabat.Infrastructure.Identity
 				var user = new AppUser()
 				{
 					DisplayName = "Omar Khalefa",
-					Email = "Omar@gmail.com",
+					Email = "omarkhalefa235@gmail.com",
 					UserName = "Omar.Khalefa",
 					PhoneNumber = "01005444826"
 

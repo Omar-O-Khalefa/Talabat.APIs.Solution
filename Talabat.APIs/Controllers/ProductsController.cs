@@ -24,7 +24,7 @@ namespace Talabat.APIs.Controllers
 			_mapper = mapper;
 		}
 		// api/Products
-		[Authorize]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts()
 		{
@@ -36,7 +36,8 @@ namespace Talabat.APIs.Controllers
 		}
 		[ProducesResponseType(typeof(ProductToReturnDto),StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(APIResponse),StatusCodes.Status404NotFound)]
-		[HttpGet("{id}")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}")]
 		public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
 		{
 			var spec = new ProductWithBrandAndCategorySpecifications(id);

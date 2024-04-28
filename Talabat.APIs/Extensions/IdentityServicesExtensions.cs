@@ -10,7 +10,7 @@ namespace Talabat.APIs.Extensions
 {
 	public static class IdentityServicesExtensions
 	{
-		public static IServiceCollection AddIdentitySerices(this IServiceCollection services,IConfiguration configuration)
+		public static IServiceCollection AddIdentityServices(this IServiceCollection services,IConfiguration configuration)
 		{
 			services.AddIdentity<AppUser,IdentityRole>(option =>
 			{
@@ -32,9 +32,10 @@ namespace Talabat.APIs.Extensions
 					ValidIssuer = configuration.GetConnectionString("JWT:ValidIssure"),
 					ValidateAudience = true,
 					ValidAudience = configuration.GetConnectionString("JWT:ValidAudience"),
-					ValidateLifetime = true,
 					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWt:Key"]))
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWt:Key"]?? string.Empty)),
+					ValidateLifetime = true,
+					ClockSkew = TimeSpan.Zero
 				};
 			});
 			return services;

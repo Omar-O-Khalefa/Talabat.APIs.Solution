@@ -16,5 +16,10 @@ namespace Talabat.Infrastructure.Identity
         {
             
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Adress>().ToTable("Addresses");
+        }
     }
 }

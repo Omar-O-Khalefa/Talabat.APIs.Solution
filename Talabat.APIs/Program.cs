@@ -14,14 +14,15 @@ using StackExchange.Redis;
 using Talabat.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Talabat.Core.Entities.Identity;
-using Talabat.Core.Services;
 using Talabat.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Talabat.Core.Services.Contract;
+using Newtonsoft.Json;
 namespace Talabat.APIs
 {
-	public class Program
+    public class Program
 	{
 		// Entrypoint
 		public static async Task Main(string[] args)
@@ -31,7 +32,11 @@ namespace Talabat.APIs
 			#region Configure Services
 			// Add services to the container.
 
-			WebApplicationbuilder.Services.AddControllers();
+			WebApplicationbuilder.Services.AddControllers().AddNewtonsoftJson(options =>
+			
+			options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+			
+			);
 			// Register Required Web APIs Services To the DI Container
 
 			WebApplicationbuilder.Services.AddSwaggerServices();
@@ -45,11 +50,11 @@ namespace Talabat.APIs
 			WebApplicationbuilder.Services.AddSingleton<IConnectionMultiplexer>((ServiceProvider) =>
 			{
 				var connection = WebApplicationbuilder.Configuration.GetConnectionString("Redis");
-				return ConnectionMultiplexer.Connect(connection);
+				return ConnectionMultiplexer.Connect(connection??string.Empty);
 			});
 			WebApplicationbuilder.Services.AddScoped<ITokenService, TokenService>();
 		
-			WebApplicationbuilder.Services.AddIdentitySerices(WebApplicationbuilder.Configuration);
+			WebApplicationbuilder.Services.AddIdentityServices(WebApplicationbuilder.Configuration);
 			WebApplicationbuilder.Services.AddApplicationServices();
 
 			#endregion
