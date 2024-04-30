@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Talabat.APIs.DTOs;
 using Talabat.APIs.Errors;
+using Talabat.APIs.Helpers;
 using Talabat.Core.Entities;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Specifications;
@@ -32,31 +33,36 @@ namespace Talabat.APIs.Controllers
             _mapper = mapper;
         }
         // api/Products
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
-		public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
-		{
-			var spec = new ProductWithBrandAndCategorySpecifications();	
-			var products = await _productRepo.GetAllWithSpecAsync(spec);
-			//JsonResult result = new JsonResult(products);
+        public async Task<ActionResult<Pageination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams)
+        {
+            var spec = new ProductWithBrandAndCategorySpecifications(specParams);
+            var products = await _productRepo.GetAllWithSpecAsync(spec);
+            //JsonResult result = new JsonResult(products);
 
-			return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
-		}
-		[ProducesResponseType(typeof(ProductToReturnDto),StatusCodes.Status200OK)]
-		[ProducesResponseType(typeof(APIResponse),StatusCodes.Status404NotFound)]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+            var Data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+
+            var CountSpec = new ProductsWithFilterationForCountSpecifiCation(specParams);
+
+            var Count = await _productRepo.GetCountAsync(CountSpec);
+
+            return Ok(new Pageination<ProductToReturnDto>(specParams.PageIndex, specParams.PageSize, Count, Data));
+        }
+
+        [ProducesResponseType(typeof(ProductToReturnDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
-		public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
-		{
-			var spec = new ProductWithBrandAndCategorySpecifications(id);
-			var product = await _productRepo.GetWithSpecAsync(spec);
+        public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
+        {
+            var spec = new ProductWithBrandAndCategorySpecifications(id);
+            var product = await _productRepo.GetWithSpecAsync(spec);
 
-			if(product is null)
-			{
-				return NotFound(new APIResponse(404));
-			}
-			return Ok(_mapper.Map<Product,ProductToReturnDto>(product));	
-		}
+            if (product is null)
+            {
+                return NotFound(new APIResponse(404));
+            }
+            return Ok(_mapper.Map<Product, ProductToReturnDto>(product));
+        }
         [HttpGet("brands")] // Get : Api/Producs/brands
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetBrands()
         {
