@@ -24,7 +24,7 @@ namespace Talabat.APIs.Controllers
 			_mapper = mapper;
 		}
 		// api/Products
-		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+		//[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts()
 		{
