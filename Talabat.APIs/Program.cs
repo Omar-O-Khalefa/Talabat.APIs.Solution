@@ -44,8 +44,8 @@ namespace Talabat.APIs
 			});
 			WebApplicationbuilder.Services.AddScoped<ITokenService, TokenService>();
 		
-			WebApplicationbuilder.Services.AddIdentityServices(WebApplicationbuilder.Configuration);
 			WebApplicationbuilder.Services.AddApplicationServices();
+			WebApplicationbuilder.Services.AddIdentityServices(WebApplicationbuilder.Configuration);
 
 			#endregion
 

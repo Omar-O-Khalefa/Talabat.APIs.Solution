@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Talabat.Core.Entities.Identity;
 using Talabat.Infrastructure.Identity;
@@ -12,10 +13,9 @@ namespace Talabat.APIs.Extensions
 	{
 		public static IServiceCollection AddIdentityServices(this IServiceCollection services,IConfiguration configuration)
 		{
-			services.AddIdentity<AppUser,IdentityRole>(option =>
-			{
+            
 
-			})
+            services.AddIdentity<AppUser,IdentityRole>()
 				.AddEntityFrameworkStores<AppIdentityDbContext>();
 
 
@@ -29,9 +29,9 @@ namespace Talabat.APIs.Extensions
 				options.TokenValidationParameters = new TokenValidationParameters()
 				{
 					ValidateIssuer = true,
-					ValidIssuer = configuration.GetConnectionString("JWT:ValidIssure"),
+					ValidIssuer = configuration["JWT:ValidIssure"],
 					ValidateAudience = true,
-					ValidAudience = configuration.GetConnectionString("JWT:ValidAudience"),
+					ValidAudience = configuration["JWT:ValidAudience"],
 					ValidateIssuerSigningKey = true,
 					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWt:Key"]?? string.Empty)),
 					ValidateLifetime = true,
