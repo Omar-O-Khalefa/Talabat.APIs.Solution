@@ -6,15 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Entities.Product;
 
-namespace Talabat.Repository.Data.Config
+namespace Talabat.Infrastructure.Data.Config.ProductConfig
 {
     internal class ProductBrandConfigurations : IEntityTypeConfiguration<ProductBrand>
-	{
-		public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<ProductBrand> builder)
-		{
+    {
+        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<ProductBrand> builder)
+        {
 
-			builder.Property(p => p.Name).IsRequired();
+            builder.Property(p => p.Name).IsRequired();
 
-		}
-	}
+        }
+    }
 }
