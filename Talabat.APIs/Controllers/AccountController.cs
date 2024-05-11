@@ -105,31 +105,31 @@ namespace Talabat.APIs.Controllers
 			});
 		}
 		[Authorize]
-		[HttpPut("Adress")]// PUT : /api/Account/Adress
+		[HttpPut("Address")]// PUT : /api/Account/Adress
 		public async Task<ActionResult<AdressDto>> UpdateAdress(AdressDto updatedAdress)
 		{
-			var adress = _mapper.Map<AdressDto, Adress>(updatedAdress);
+			var adress = _mapper.Map<AdressDto, Address>(updatedAdress);
 
 
 			var appUser = await _userManger.FindUserWithAdressByEmailAsync(User);
 
-			appUser.Adress = adress;
+			appUser.Address = adress;
 			var resault = await _userManger.UpdateAsync(appUser);
 
 			if (!resault.Succeeded)
 			{
 				return BadRequest(new APIResponse(400, "An Error Occured Dureing Update The Aderss"));
 			}
-			return Ok(_mapper.Map<Adress, AdressDto>(appUser.Adress));
+			return Ok(_mapper.Map<Address, AdressDto>(appUser.Address));
 		}
 
 		[Authorize]
-		[HttpGet("adress")]// GET : /api/Account/Adress
+		[HttpGet("Address")]// GET : /api/Account/Adress
 
 		public async Task<ActionResult<AdressDto>> GetUserAdress()
 		{
 			var appUser = await _userManger.FindUserWithAdressByEmailAsync(User);
-			return Ok(_mapper.Map<Adress, AdressDto>(appUser.Adress ));
+			return Ok(_mapper.Map<Address, AdressDto>(appUser.Address ));
 		}
 
 

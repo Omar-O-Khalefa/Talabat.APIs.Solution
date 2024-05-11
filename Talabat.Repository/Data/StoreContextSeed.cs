@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Talabat.Core.Entities;
+using Talabat.Core.Entities.Product;
 
 namespace Talabat.Repository.Data
 {
-	public static class StoreContextSeed
+    public static class StoreContextSeed
 	{
 		public async static Task SeedAsync(StoreContext _dbContext)
 		{

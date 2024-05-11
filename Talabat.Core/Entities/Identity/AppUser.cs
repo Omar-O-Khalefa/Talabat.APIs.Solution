@@ -11,6 +11,6 @@ namespace Talabat.Core.Entities.Identity
 	{
 		public string DisplayName { get; set; } = null!;
 
-		public Adress? Adress { get; set; } = null; // Navigational Peroperty [One] 
+		public Address? Address { get; set; } = null; // Navigational Peroperty [One] 
 	}
 }

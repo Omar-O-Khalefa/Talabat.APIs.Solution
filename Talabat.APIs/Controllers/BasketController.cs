@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Talabat.APIs.DTOs;
 using Talabat.APIs.Errors;
-using Talabat.Core.Entities;
+using Talabat.Core.Entities.Basket;
 using Talabat.Core.Repositories.Contract;
 
 namespace Talabat.APIs.Controllers
 {
-	public class BasketController : BaseApiController
+    public class BasketController : BaseApiController
 	{
 		private readonly IBasketRepository _basketRepository;
 		private readonly IMapper _mapper;

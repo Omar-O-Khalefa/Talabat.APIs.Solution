@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Talabat.Core.Entities;
+using Talabat.Core.Entities.Product;
 
 namespace Talabat.Repository.Data.Config
 {
-	internal class ProductCategoryConfigurations : IEntityTypeConfiguration<ProductCategory>
+    internal class ProductCategoryConfigurations : IEntityTypeConfiguration<ProductCategory>
 	{
 		public void Configure(EntityTypeBuilder<ProductCategory> builder)
 		{

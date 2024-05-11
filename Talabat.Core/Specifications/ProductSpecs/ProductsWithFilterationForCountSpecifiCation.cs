@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
-using Talabat.Core.Entities;
+using Talabat.Core.Entities.Product;
 
 namespace Talabat.Core.Specifications.ProductSpecs
 {
-	public class ProductsWithFilterationForCountSpecifiCation : BaseSpecifications<Product>
+    public class ProductsWithFilterationForCountSpecifiCation : BaseSpecifications<Product>
 	{
 		public ProductsWithFilterationForCountSpecifiCation(ProductSpecParams specParams)
 		: base( p =>
