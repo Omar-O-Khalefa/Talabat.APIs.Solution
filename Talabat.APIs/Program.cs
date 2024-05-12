@@ -7,9 +7,9 @@ using StackExchange.Redis;
 using Talabat.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Talabat.Core.Entities.Identity;
-using Talabat.Service;
 using Talabat.Core.Services.Contract;
 using Newtonsoft.Json;
+using Talabat.Service.AuthService;
 namespace Talabat.APIs
 {
     public class Program
