@@ -48,4 +48,19 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         return await ApplySpecifiCations(spec).CountAsync();
     }
+
+    public void Add(T entity)
+    {
+        _dbContext.Set<T>().Add(entity);
+    }
+
+    public void Update(T entity)
+    {
+        _dbContext.Set<T>().Update(entity);
+    }
+
+    public void Delete(T entity)
+    {
+        _dbContext.Set<T>().Remove(entity);
+    }
 }
