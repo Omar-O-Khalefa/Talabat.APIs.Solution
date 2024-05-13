@@ -13,7 +13,7 @@ namespace Talabat.Service.OrderService
     {
         private readonly IBasketRepository _basketRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IGenericRepository<Product> _productRepo;
+        private readonly IGenericRepository<Talabat.Core.Entities.Product.Product> _productRepo;
         private readonly IGenericRepository<DeliveryMethod> _deliveryMethodRepo;
         private readonly IGenericRepository<Order> _orderRepo;
 
@@ -42,7 +42,7 @@ namespace Talabat.Service.OrderService
 
             if (basket?.Items.Count > 0)
             {
-                var productRepo = _unitOfWork.Repository<Product>();
+                var productRepo = _unitOfWork.Repository<Talabat.Core.Entities.Product.Product>();
 
                 foreach (var item in basket.Items)
                 {
