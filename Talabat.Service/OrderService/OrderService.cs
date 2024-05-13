@@ -5,6 +5,7 @@ using Talabat.Core.Entities.Order_Aggregate;
 using Talabat.Core.Entities.Product;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Services.Contract;
+using Talabat.Core.Specifications.OrderSpecs;
 
 namespace Talabat.Service.OrderService
 {
@@ -45,7 +46,7 @@ namespace Talabat.Service.OrderService
 
                 foreach (var item in basket.Items)
                 {
-                    var product = await productRepo.GetAsync(item.Id);
+                    var product = await productRepo.GetByIdAsync(item.Id);
                     var productItemOrder = new ProductItemOrder(item.Id, product.Name, product.PictureUrl);
                     var orderItem = new OrderItem(productItemOrder, product.Price, item.Quantity);
 
@@ -59,7 +60,7 @@ namespace Talabat.Service.OrderService
 
             // 4. Get Delivery Method From DeliveryMethods Repo
 
-            var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetAsync(deliveryMethodId);
+            var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
 
             // 5. Create Order
 
@@ -89,14 +90,22 @@ namespace Talabat.Service.OrderService
             throw new NotImplementedException();
         }
 
-        public Task<Order> GetOrderByIdForAsync(string buyerEmail, int orderId)
+        public Task<Order?> GetOrderByIdForAsync(string buyerEmail, int orderId)
         {
-            throw new NotImplementedException();
+            var orderRepo = _unitOfWork.Repository<Order>();
+            var orderspec = new OrderSpecifications(buyerEmail, orderId);
+            var order = orderRepo.GetByIdWithSpecAsync(orderspec);
+            return order;
         }
 
-        public Task<IReadOnlyList<Order>> GetOrderForUserAsync(string buyerEmail)
+        public async Task<IReadOnlyList<Order>> GetOrderForUserAsync(string buyerEmail)
         {
-            throw new NotImplementedException();
+
+            var orderRepoo = _unitOfWork.Repository<Order>();
+            var spec = new OrderSpecifications(buyerEmail);
+            var orders = await orderRepoo.GetAllWithSpecAsync(spec);
+
+            return orders;
         }
     }
 }
