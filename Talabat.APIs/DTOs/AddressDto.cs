@@ -3,7 +3,7 @@ using Talabat.Core.Entities.Identity;
 
 namespace Talabat.APIs.DTOs
 {
-	public class AdressDto
+	public class AddressDto
 	{
 		[Required]
 		public string FirstName { get; set; } = null!;

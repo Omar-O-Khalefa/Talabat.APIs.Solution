@@ -41,9 +41,11 @@ namespace Talabat.Service.OrderService
 
             if (basket?.Items.Count > 0)
             {
+                var productRepo = _unitOfWork.Repository<Product>();
+
                 foreach (var item in basket.Items)
                 {
-                    var product = await _unitOfWork.Repository<Product>().GetAsync(item.Id);
+                    var product = await productRepo.GetAsync(item.Id);
                     var productItemOrder = new ProductItemOrder(item.Id, product.Name, product.PictureUrl);
                     var orderItem = new OrderItem(productItemOrder, product.Price, item.Quantity);
 
@@ -70,11 +72,11 @@ namespace Talabat.Service.OrderService
                 subtotal: subTotal
                 );
 
-             _unitOfWork.Repository<Order>().Add(order);
+            _unitOfWork.Repository<Order>().Add(order);
 
             // 6. Save To Database [TODO]
 
-            var res =   await _unitOfWork.CompleteAsync();
+            var res = await _unitOfWork.CompleteAsync();
 
             if (res <= 0) return null;
 
