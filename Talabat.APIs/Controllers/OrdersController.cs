@@ -27,11 +27,15 @@ namespace Talabat.APIs.Controllers
             _mapper = mapper;
             //_userManger = _userManger;
         }
-        [ProducesResponseType(typeof(Order),StatusCodes.Status200OK)]
+
+
+
+
+    
+        [ProducesResponseType(typeof(OrderToReturnDto),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(APIResponse),StatusCodes.Status400BadRequest)]
         [HttpPost] // POST : api/Orders
-
-        public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
+        public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
         {
             var Addresss = _mapper.Map<AddressDto, Core.Entities.Order_Aggregate.Address>(orderDto.ShippingAddress);
             //var email = User.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
@@ -42,27 +46,47 @@ namespace Talabat.APIs.Controllers
             {
                 return BadRequest(new APIResponse(400));
             }
-            return Ok(order);   
+            return Ok(_mapper.Map<Order, OrderToReturnDto>(order));   
         }
 
+
+
+
+
         [HttpGet] //GET : api/Orders?email=omar@gmail.com
-        public async Task<ActionResult<IReadOnlyList<Order>>> GetOrdersForUser(string email)
+        public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser(string email)
         {
             var orders = await _orderService.GetOrderForUserAsync(email);
 
-            return Ok(orders);
+            return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(orders));
         }
-        [ProducesResponseType(typeof(Order),StatusCodes.Status200OK)]
+
+
+       
+        [ProducesResponseType(typeof(OrderToReturnDto),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(APIResponse),StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]  // GET : api/Orders/1?email=omar@gmail.com
-        public async Task<ActionResult<Order>> GetOrderForUser( string email,int id )
+        public async Task<ActionResult<OrderToReturnDto>> GetOrderForUser( string email,int id )
         {
-            var order = await _orderService.GetOrderByIdForAsync( email, id);
+            var order = await _orderService.GetOrderByIdForUserAsync( email, id);
             if(order is null)
             {
                 return NotFound(new APIResponse(404));
             }
-            return Ok(order);
+            return Ok(_mapper.Map<Order,OrderToReturnDto>(order));
+        }
+
+
+
+
+
+        [Authorize]
+        [HttpGet("deliveryMethods")] //GET : api/orders/deliveryMethods
+
+        public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethodsAsync()
+        {
+            var deliveryMethods = await _orderService.GetDeliveryMethodsAsync();
+            return Ok(deliveryMethods);
         }
     }
 }
