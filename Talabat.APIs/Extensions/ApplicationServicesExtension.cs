@@ -8,6 +8,7 @@ using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Services.Contract;
 using Talabat.Infrastructure;
 using Talabat.Service.OrderService;
+using Talabat.Service.PaymentService;
 using Talabat.Service.ProductSe;
 
 namespace Talabat.APIs.Extensions
@@ -16,6 +17,8 @@ namespace Talabat.APIs.Extensions
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
+			
+			services.AddScoped(typeof(IPaymentService), typeof(PaymentService));
 
 			services.AddScoped(typeof(IProductService), typeof(ProductService));
 
