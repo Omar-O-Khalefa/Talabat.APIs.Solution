@@ -7,6 +7,7 @@ using Talabat.APIs.DTOs;
 using Talabat.APIs.Errors;
 using Talabat.APIs.Extensions;
 using Talabat.Core.Entities.Identity;
+using Talabat.Core.Entities.Order_Aggregate;
 using Talabat.Core.Services.Contract;
 
 namespace Talabat.APIs.Controllers
@@ -108,7 +109,7 @@ namespace Talabat.APIs.Controllers
 		[HttpPut("Address")]// PUT : /api/Account/Adress
 		public async Task<ActionResult<AddressDto>> UpdateAdress(AddressDto updatedAdress)
 		{
-			var adress = _mapper.Map<AddressDto, Address>(updatedAdress);
+			var adress = _mapper.Map<AddressDto, identityAddress>(updatedAdress);
 
 
 			var appUser = await _userManger.FindUserWithAdressByEmailAsync(User);
@@ -120,16 +121,16 @@ namespace Talabat.APIs.Controllers
 			{
 				return BadRequest(new APIResponse(400, "An Error Occured Dureing Update The Aderss"));
 			}
-			return Ok(_mapper.Map<Address, AddressDto>(appUser.Address));
+			return Ok(_mapper.Map<identityAddress, AddressDto>(appUser.Address));
 		}
 
 		[Authorize]
-		[HttpGet("Address")]// GET : /api/Account/Adress
+		[HttpGet("address")]// GET : /api/Account/Adress
 
 		public async Task<ActionResult<AddressDto>> GetUserAdress()
 		{
 			var appUser = await _userManger.FindUserWithAdressByEmailAsync(User);
-			return Ok(_mapper.Map<Address, AddressDto>(appUser.Address ));
+			return Ok(_mapper.Map<identityAddress, AddressDto>(appUser.Address ));
 		}
 
 

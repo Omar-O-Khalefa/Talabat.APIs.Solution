@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Talabat.APIs.DTOs;
 using Talabat.Core.Entities.Basket;
+using Talabat.Core.Entities.Identity;
 using Talabat.Core.Entities.Order_Aggregate;
 using Talabat.Core.Entities.Product;
 
@@ -10,7 +11,7 @@ namespace Talabat.APIs.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<AddressDto,Address>();
+            CreateMap<AddressDto,OrderAddress>();
 
             CreateMap<Product, ProductToReturnDto>()
                .ForMember(d => d.brand, o => o.MapFrom(s => s.brand.Name))
@@ -28,7 +29,8 @@ namespace Talabat.APIs.Helpers
 
             CreateMap<BasketItemDto, BasketItem>();
 
-            CreateMap<AddressDto, Address>().ReverseMap();
+            CreateMap<AddressDto, OrderAddress>().ReverseMap();
+            CreateMap<AddressDto, identityAddress>().ReverseMap();
 
             CreateMap<Order, OrderToReturnDto>()
                 .ForMember(d => d.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))

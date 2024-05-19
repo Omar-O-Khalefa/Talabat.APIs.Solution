@@ -39,7 +39,7 @@ namespace Talabat.APIs.Controllers
         }
         // api/Products
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
         public async Task<ActionResult<Pageination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams)
         {
@@ -56,7 +56,7 @@ namespace Talabat.APIs.Controllers
 
         [ProducesResponseType(typeof(ProductToReturnDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(APIResponse), StatusCodes.Status404NotFound)]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
@@ -75,8 +75,8 @@ namespace Talabat.APIs.Controllers
             return Ok(brands);
         }
 
-        [HttpGet("categorys")] // Get : Api/Producs/category
-        public async Task<ActionResult<IReadOnlyList<ProductCategory>>> GetCategorys()
+        [HttpGet("categories")] // Get : Api/Producs/category
+        public async Task<ActionResult<IReadOnlyList<ProductCategory>>> GetCategories()
         {
             var categories = await _productService.GetCategorysAsync();
             return Ok(categories);

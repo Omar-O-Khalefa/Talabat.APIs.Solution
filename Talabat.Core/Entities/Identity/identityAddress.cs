@@ -1,6 +1,6 @@
 ﻿namespace Talabat.Core.Entities.Identity
 {
-	public class Address
+	public class identityAddress
 
 	{
         public int Id { get; set; }

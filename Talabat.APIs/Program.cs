@@ -46,12 +46,16 @@ namespace Talabat.APIs
 		
 			WebApplicationbuilder.Services.AddApplicationServices();
 			WebApplicationbuilder.Services.AddIdentityServices(WebApplicationbuilder.Configuration);
-				
 
-			#endregion
+			WebApplicationbuilder.Services.AddCors(options => options.AddPolicy("myPolice",poiceOptions =>
+			{
+				poiceOptions.AllowAnyHeader().AllowAnyMethod().WithOrigins(WebApplicationbuilder.Configuration["FrontBaseUrl"]);
+			}));
 
-			#region Create DataBase For First Time Deploying
-			var app = WebApplicationbuilder.Build();
+            #endregion
+
+            #region Create DataBase For First Time Deploying
+            var app = WebApplicationbuilder.Build();
 
 			using var scope = app.Services.CreateScope();
 
@@ -93,6 +97,8 @@ namespace Talabat.APIs
 			app.UseHttpsRedirection();
 
 			app.UseStaticFiles();
+
+			app.UseCors("myPolice");
 
 			app.MapControllers();
 
