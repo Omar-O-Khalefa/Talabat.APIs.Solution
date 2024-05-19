@@ -37,10 +37,11 @@ namespace Talabat.APIs.Controllers
         [HttpPost] // POST : api/Orders
         public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
         {
+            var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
             var Addresss = _mapper.Map<AddressDto, Core.Entities.Order_Aggregate.Address>(orderDto.ShippingAddress);
             //var email = User.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
             //var user = await _userManger.FindByEmailAsync(email);
-            var order =  await _orderService.CreateOrderAsync(orderDto.BuyerEmail, orderDto.BasketId, orderDto.DeliveryMethodId, Addresss);
+            var order =  await _orderService.CreateOrderAsync(buyerEmail, orderDto.BasketId, orderDto.DeliveryMethodId, Addresss);
 
             if(order is null)
             {
