@@ -7,7 +7,7 @@ using Talabat.Core.Entities.Order_Aggregate;
 
 namespace Talabat.Core.Specifications.OrderSpecs
 {
-    public class OrderSpecifications :BaseSpecifications<Order>
+    public class OrderSpecifications :BaseSpecifications<OrderAggregate>
     {
         public OrderSpecifications( string buyerEmail)
             :base(o => o.BuyerEmail == buyerEmail)

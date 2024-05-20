@@ -10,7 +10,7 @@ using Talabat.APIs.Errors;
 using Talabat.Core.Entities.Identity;
 using Talabat.Core.Entities.Order_Aggregate;
 using Talabat.Core.Services.Contract;
-using Order = Talabat.Core.Entities.Order_Aggregate.Order;
+using OrderAggregate = Talabat.Core.Entities.Order_Aggregate.OrderAggregate;
 
 namespace Talabat.APIs.Controllers
 {
@@ -47,7 +47,7 @@ namespace Talabat.APIs.Controllers
             {
                 return BadRequest(new APIResponse(400));
             }
-            return Ok(_mapper.Map<Order, OrderToReturnDto>(order));   
+            return Ok(_mapper.Map<OrderAggregate, OrderToReturnDto>(order));   
         }
 
 
@@ -59,7 +59,7 @@ namespace Talabat.APIs.Controllers
         {
             var orders = await _orderService.GetOrderForUserAsync(email);
 
-            return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(orders));
+            return Ok(_mapper.Map<IReadOnlyList<OrderAggregate>, IReadOnlyList<OrderToReturnDto>>(orders));
         }
 
 
@@ -74,7 +74,7 @@ namespace Talabat.APIs.Controllers
             {
                 return NotFound(new APIResponse(404));
             }
-            return Ok(_mapper.Map<Order,OrderToReturnDto>(order));
+            return Ok(_mapper.Map<OrderAggregate,OrderToReturnDto>(order));
         }
 
 

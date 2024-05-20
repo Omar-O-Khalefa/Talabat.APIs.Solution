@@ -2,13 +2,13 @@
 
 namespace Talabat.Core.Entities.Order_Aggregate
 {
-    public class Order : BaseEntity
+    public class OrderAggregate : BaseEntity
     {
-        public Order()
+        public OrderAggregate()
         {
             
         }
-        public Order(string buyerEmail, OrderAddress shippingAddress, DeliveryMethod? deliveryMethod, ICollection<OrderItem> items, decimal subtotal,string paymentIntentIdd)
+        public OrderAggregate(string buyerEmail, OrderAddress shippingAddress, DeliveryMethod? deliveryMethod, ICollection<OrderItem> items, decimal subtotal,string paymentIntentIdd)
         {
             BuyerEmail = buyerEmail;
             ShippingAddress = shippingAddress;

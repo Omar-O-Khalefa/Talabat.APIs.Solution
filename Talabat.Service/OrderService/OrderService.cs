@@ -16,7 +16,7 @@ namespace Talabat.Service.OrderService
         private readonly IPaymentService _paymentService;
         private readonly IGenericRepository<Talabat.Core.Entities.Product.Product> _productRepo;
         private readonly IGenericRepository<DeliveryMethod> _deliveryMethodRepo;
-        private readonly IGenericRepository<Order> _orderRepo;
+        private readonly IGenericRepository<OrderAggregate> _orderRepo;
 
         public OrderService(
             IBasketRepository basketRepository,
@@ -34,7 +34,7 @@ namespace Talabat.Service.OrderService
             //_deliveryMethodRepo = deliveryMethodRepo;
             //_orderRepo = orderRepo;
         }
-        public async Task<Order?> CreateOrderAsync(string BuyerEmail, string BasketId, int deliveryMethodId, OrderAddress shippingAddress)
+        public async Task<OrderAggregate?> CreateOrderAsync(string BuyerEmail, string BasketId, int deliveryMethodId, OrderAddress shippingAddress)
         {
             // 1.Get Basket From Baskets Repo
 
@@ -65,7 +65,7 @@ namespace Talabat.Service.OrderService
 
             var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
 
-            var orderRepo = _unitOfWork.Repository<Order>();
+            var orderRepo = _unitOfWork.Repository<OrderAggregate>();
             var spec = new OrderWithPaymentIntentSpaceification(basket?.PayemntIntentId);
             var exisitingOrder = await orderRepo.GetByIdWithSpecAsync(spec);
 
@@ -77,7 +77,7 @@ namespace Talabat.Service.OrderService
 
             // 5. Create Order
 
-            var order = new Order
+            var order = new OrderAggregate
                 (
                 buyerEmail: BuyerEmail,
                 shippingAddress: shippingAddress,
@@ -104,18 +104,18 @@ namespace Talabat.Service.OrderService
             return await _unitOfWork.Repository<DeliveryMethod>().GetAllAsync();
         }
 
-        public Task<Order?> GetOrderByIdForUserAsync(string buyerEmail, int orderId)
+        public Task<OrderAggregate?> GetOrderByIdForUserAsync(string buyerEmail, int orderId)
         {
-            var orderRepo = _unitOfWork.Repository<Order>();
+            var orderRepo = _unitOfWork.Repository<OrderAggregate>();
             var orderspec = new OrderSpecifications(buyerEmail, orderId);
             var order = orderRepo.GetByIdWithSpecAsync(orderspec);
             return order;
         }
         //=> _unitOfWork.Repository<Order>().GetByIdWithSpecAsync(new OrderSpecifications(orderId, buyerEmail));
-        public async Task<IReadOnlyList<Order>> GetOrderForUserAsync(string buyerEmail)
+        public async Task<IReadOnlyList<OrderAggregate>> GetOrderForUserAsync(string buyerEmail)
         {
 
-            var orderRepoo = _unitOfWork.Repository<Order>();
+            var orderRepoo = _unitOfWork.Repository<OrderAggregate>();
             var spec = new OrderSpecifications(buyerEmail);
             var orders = await orderRepoo.GetAllWithSpecAsync(spec);
 
