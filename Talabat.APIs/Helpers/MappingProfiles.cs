@@ -32,7 +32,7 @@ namespace Talabat.APIs.Helpers
             CreateMap<AddressDto, OrderAddress>().ReverseMap();
             CreateMap<AddressDto, identityAddress>().ReverseMap();
 
-            CreateMap<OrderAggregate, OrderToReturnDto>()
+            CreateMap<OrderAg, OrderToReturnDto>()
                 .ForMember(d => d.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))
                 .ForMember(d => d.DeliveryMethodCost, o => o.MapFrom(s => s.DeliveryMethod.Cost));
 

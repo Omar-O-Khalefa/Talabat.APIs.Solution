@@ -25,7 +25,7 @@ namespace Talabat.Repository.Data
 		public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<OrderAggregate> Orders { get; set; }
+        public DbSet<OrderAg> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
     }

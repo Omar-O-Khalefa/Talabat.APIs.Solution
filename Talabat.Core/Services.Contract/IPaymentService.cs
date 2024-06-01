@@ -12,6 +12,6 @@ namespace Talabat.Core.Services.Contract
     public interface IPaymentService
     {
         Task<CustomerBasket?> CreateOrUpdatePaymentIntet(string basketId);
-        Task<OrderAggregate?> UpdateOrderStatus(string paymentIntentId, bool Ispaid);
+        Task<OrderAg?> UpdateOrderStatus(string paymentIntentId, bool Ispaid);
     }
 }

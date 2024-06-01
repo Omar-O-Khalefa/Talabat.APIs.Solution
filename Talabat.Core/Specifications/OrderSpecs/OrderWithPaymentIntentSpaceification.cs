@@ -7,7 +7,7 @@ using Talabat.Core.Entities.Order_Aggregate;
 
 namespace Talabat.Core.Specifications.OrderSpecs
 {
-    public class OrderWithPaymentIntentSpaceification : BaseSpecifications<OrderAggregate>
+    public class OrderWithPaymentIntentSpaceification : BaseSpecifications<OrderAg>
     {
         public OrderWithPaymentIntentSpaceification(string? paymentIntentId) :
         base(o => o.PaymentIntentId == paymentIntentId)

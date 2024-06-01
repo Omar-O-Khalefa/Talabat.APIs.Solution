@@ -89,9 +89,9 @@ namespace Talabat.Service.PaymentService
             return basket;
         }
 
-        public async Task<OrderAggregate?> UpdateOrderStatus(string paymentIntentId, bool Ispaid)
+        public async Task<OrderAg?> UpdateOrderStatus(string paymentIntentId, bool Ispaid)
         {
-            var orderRepo = _unitOfWork.Repository<OrderAggregate>();
+            var orderRepo = _unitOfWork.Repository<OrderAg>();
             var spec = new OrderWithPaymentIntentSpaceification(paymentIntentId);
            var order = await orderRepo.GetByIdWithSpecAsync(spec);
 

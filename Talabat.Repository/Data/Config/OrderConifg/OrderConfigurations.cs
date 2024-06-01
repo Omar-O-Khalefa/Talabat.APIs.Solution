@@ -4,9 +4,9 @@ using Talabat.Core.Entities.Order_Aggregate;
 
 namespace Talabat.Infrastructure.Data.Config.OrderConifg
 {
-    internal class OrderConfigurations : IEntityTypeConfiguration<OrderAggregate>
+    internal class OrderConfigurations : IEntityTypeConfiguration<OrderAg>
     {
-        public void Configure(EntityTypeBuilder<OrderAggregate> builder)
+        public void Configure(EntityTypeBuilder<OrderAg> builder)
         {
             builder.OwnsOne(Order => Order.ShippingAddress, ShippingAddress => ShippingAddress.WithOwner());
             builder.Property(Order => Order.Status)

@@ -40,7 +40,7 @@ namespace Talabat.APIs.Controllers
         [HttpPost("webhook")]
         public async Task<ActionResult> WebHook()
         {
-            OrderAggregate? order;
+            OrderAg? order;
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
 
             var stripeEvent = EventUtility.ConstructEvent(json,

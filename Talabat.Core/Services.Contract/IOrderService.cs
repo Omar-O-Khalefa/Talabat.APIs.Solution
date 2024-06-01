@@ -11,11 +11,11 @@ namespace Talabat.Core.Services.Contract
 {
     public interface IOrderService
     {
-        Task<OrderAggregate?> CreateOrderAsync(string BuyerEmail,string BasketId,int deliveryMethodId, Entities.Order_Aggregate.OrderAddress shippingAddress);
+        Task<OrderAg?> CreateOrderAsync(string BuyerEmail,string BasketId,int deliveryMethodId, Entities.Order_Aggregate.OrderAddress shippingAddress);
 
-        Task<IReadOnlyList<OrderAggregate>> GetOrderForUserAsync(string buyerEmail);
+        Task<IReadOnlyList<OrderAg>> GetOrderForUserAsync(string buyerEmail);
 
-        Task<OrderAggregate?> GetOrderByIdForUserAsync(string buyerEmail, int orderId);
+        Task<OrderAg?> GetOrderByIdForUserAsync(string buyerEmail, int orderId);
 
         Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync();
     }

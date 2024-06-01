@@ -10,7 +10,9 @@ using Talabat.APIs.Errors;
 using Talabat.Core.Entities.Identity;
 using Talabat.Core.Entities.Order_Aggregate;
 using Talabat.Core.Services.Contract;
-using OrderAggregate = Talabat.Core.Entities.Order_Aggregate.OrderAggregate;
+using Order = Talabat.Core.Entities.Order_Aggregate;
+
+    
 
 namespace Talabat.APIs.Controllers
 {
@@ -37,17 +39,19 @@ namespace Talabat.APIs.Controllers
         [HttpPost] // POST : api/Orders
         public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
         {
-            var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
-            var Addresss = _mapper.Map<AddressDto, Core.Entities.Order_Aggregate.OrderAddress>(orderDto.ShippingAddress);
+
+            var BuyerEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var Addresss = _mapper.Map<AddressDto, OrderAddress>(orderDto.ShippingAddress);
             //var email = User.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
             //var user = await _userManger.FindByEmailAsync(email);
-            var order =  await _orderService.CreateOrderAsync(buyerEmail, orderDto.BasketId, orderDto.DeliveryMethodId, Addresss);
+            var order =  await _orderService.CreateOrderAsync(BuyerEmail, orderDto.BasketId, orderDto.DeliveryMethodId, Addresss);
 
             if(order is null)
             {
                 return BadRequest(new APIResponse(400));
             }
-            return Ok(_mapper.Map<OrderAggregate, OrderToReturnDto>(order));   
+            return Ok(_mapper.Map<OrderAg, OrderToReturnDto>(order));   
         }
 
 
@@ -59,7 +63,7 @@ namespace Talabat.APIs.Controllers
         {
             var orders = await _orderService.GetOrderForUserAsync(email);
 
-            return Ok(_mapper.Map<IReadOnlyList<OrderAggregate>, IReadOnlyList<OrderToReturnDto>>(orders));
+            return Ok(_mapper.Map<IReadOnlyList<OrderAg>, IReadOnlyList<OrderToReturnDto>>(orders));
         }
 
 
@@ -74,7 +78,7 @@ namespace Talabat.APIs.Controllers
             {
                 return NotFound(new APIResponse(404));
             }
-            return Ok(_mapper.Map<OrderAggregate,OrderToReturnDto>(order));
+            return Ok(_mapper.Map<OrderAg, OrderToReturnDto>(order));
         }
 
 
