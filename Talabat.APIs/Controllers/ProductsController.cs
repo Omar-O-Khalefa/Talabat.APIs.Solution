@@ -38,6 +38,7 @@ namespace Talabat.APIs.Controllers
             _mapper = mapper;
         }
         // api/Products
+       [CachedAttribute(600)] // ActionFilter
         [HttpGet]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
@@ -52,6 +53,8 @@ namespace Talabat.APIs.Controllers
             var Count = await _productService.GetCountAsync(specParams);
 
             return Ok(new Pageination<ProductToReturnDto>(specParams.PageIndex, specParams.PageSize, Count, Data));
+
+          
         }
 
         [ProducesResponseType(typeof(ProductToReturnDto), StatusCodes.Status200OK)]
