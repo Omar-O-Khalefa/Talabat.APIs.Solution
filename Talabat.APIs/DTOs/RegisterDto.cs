@@ -11,9 +11,9 @@ namespace Talabat.APIs.DTOs
         [EmailAddress]
 		public string Email { get; set; } = null!;
 
-		[Required]
-		[Phone]
-		public string PhoneNumber { get; set; } = null!;
+		//[Required]
+		//[Phone]
+		//public string PhoneNumber { get; set; } = null!;
 
 		[Required]
 		[RegularExpression("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")]

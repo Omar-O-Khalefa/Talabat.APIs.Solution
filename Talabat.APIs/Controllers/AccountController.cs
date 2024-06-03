@@ -69,7 +69,7 @@ namespace Talabat.APIs.Controllers
 			{
 				DisplayName = registerDto.DisplayName,
 				Email = registerDto.Email,
-				PhoneNumber = registerDto.PhoneNumber,
+				//PhoneNumber = registerDto.PhoneNumber,
 				UserName = registerDto.Email.Split('@')[0]
 
 
