@@ -50,7 +50,7 @@ namespace Talabat.APIs.Helpers
 
 
             keyBuilder.Append(request.Path); // api/product
-            foreach(var (key,value ) in request.Query)
+            foreach(var (key,value ) in request.Query.OrderBy(o => o.Key))
             {
                 keyBuilder.Append($"|{key}-{value}");
                 // api/product|pageIndex-1

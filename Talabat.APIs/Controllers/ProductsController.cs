@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Talabat.APIs.DTOs;
 using Talabat.APIs.Errors;
@@ -38,7 +36,7 @@ namespace Talabat.APIs.Controllers
             _mapper = mapper;
         }
         // api/Products
-       [CachedAttribute(600)] // ActionFilter
+        [CachedAttribute(600)] // ActionFilter
         [HttpGet]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
@@ -54,7 +52,7 @@ namespace Talabat.APIs.Controllers
 
             return Ok(new Pageination<ProductToReturnDto>(specParams.PageIndex, specParams.PageSize, Count, Data));
 
-          
+
         }
 
         [ProducesResponseType(typeof(ProductToReturnDto), StatusCodes.Status200OK)]

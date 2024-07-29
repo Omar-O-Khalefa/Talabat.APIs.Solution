@@ -11,5 +11,9 @@ namespace Talabat.APIs.DTOs
         public string? ClientSecret { get; set; }
         public decimal ShippingPrice { get; set; }
         public int? DeliveryMethodId { get; set; }
+
+
+
+
     }
 }
